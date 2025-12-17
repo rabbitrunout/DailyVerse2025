@@ -3,17 +3,20 @@ package com.example.dailyverse2025.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dailyverse2025.R
 import com.example.dailyverse2025.models.Quote
-
-class QuoteAdapter(private val quotes: List<Quote>) :
+import com.example.dailyverse2025.utils.FavoritesManager
+class QuoteAdapter(private val quotes: List<Quote>, private val showFavoriteButton: Boolean) :
     RecyclerView.Adapter<QuoteAdapter.QuoteViewHolder>() {
 
     inner class QuoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val quoteText: TextView = itemView.findViewById(R.id.quote_text)
         val quoteAuthor: TextView = itemView.findViewById(R.id.quote_author)
+        val favoriteButton: Button = itemView.findViewById(R.id.favorite_button)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuoteViewHolder {
@@ -25,6 +28,24 @@ class QuoteAdapter(private val quotes: List<Quote>) :
         val quote = quotes[position]
         holder.quoteText.text = "\"${quote.text}\""
         holder.quoteAuthor.text = "- ${quote.author}"
+
+        if (showFavoriteButton) {
+            holder.favoriteButton.visibility = View.VISIBLE
+            holder.favoriteButton.setOnClickListener {
+                val context = holder.itemView.context
+                val added = FavoritesManager.toggleFavorite(quotes[position], context)
+
+                val message = if (added) {
+                    "Added to favorites!"
+                } else {
+                    "Removed from favorites!"
+                }
+                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            holder.favoriteButton.visibility = View.GONE
+        }
+
     }
 
     override fun getItemCount() = quotes.size

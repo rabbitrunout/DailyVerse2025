@@ -5,18 +5,31 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.dailyverse2025.R
+import com.example.dailyverse2025.adapters.QuoteAdapter
+import com.example.dailyverse2025.models.Quote
+import com.example.dailyverse2025.utils.FavoritesManager
+
+
 
 class FavoritesFragment : Fragment() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    private lateinit var recyclerView: RecyclerView
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.fragment_favorites, container, false)
-        // Inflate the layout for this fragment
+        recyclerView = view.findViewById(R.id.favorites_recycler_view)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.adapter = QuoteAdapter(FavoritesManager.getFavorites(), showFavoriteButton = false)
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        Toast.makeText(requireContext(), "Tap a quote to remove it from Favorites.(UNDER CONSTRUCTION)", Toast.LENGTH_SHORT).show()
+    }
 
 }

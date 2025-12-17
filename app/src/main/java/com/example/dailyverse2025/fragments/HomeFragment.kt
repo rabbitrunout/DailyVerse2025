@@ -5,9 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import com.example.dailyverse2025.R
 import com.example.dailyverse2025.models.Quote
+import com.example.dailyverse2025.utils.FavoritesManager
 import com.example.dailyverse2025.utils.QuoteRepository
 
 class HomeFragment : Fragment() {
@@ -19,14 +22,28 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.fragment_home, container,false)
+
         val quoteText = view.findViewById<TextView>(R.id.daily_quote_text)
-        quoteText.text = QuoteRepository.getRandomQuote(requireContext()).text
+        val favoriteButton = view.findViewById<Button>(R.id.favorite_button)
 
         quote = QuoteRepository.getRandomQuote(requireContext())
-        quoteText.text = "\"${quote.text}\"\n\n-${quote.author}"
+        quoteText.text = "\"${quote.text}\"\n\n- ${quote.author}"
+
+        favoriteButton.setOnClickListener {
+            //FavoritesManager.addFavorite(quote, requireContext())
+            //Toast.makeText(requireContext(), "Added to favorites!", Toast.LENGTH_SHORT).show()
+            val added = FavoritesManager.toggleFavorite(quote, requireContext())
+
+            val message = if (added) {
+                "Added to favorites!"
+            } else {
+                "Removed from favorites!"
+            }
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        }
+
 
         return view
-
     }
 
 

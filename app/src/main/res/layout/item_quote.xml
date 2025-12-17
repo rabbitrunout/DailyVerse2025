@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,7 +9,7 @@
         android:id="@+id/quote_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Quote text"
+        android:text="@string/quote_text"
         android:textSize="16sp"
         android:textStyle="italic" />
 
@@ -16,8 +17,17 @@
         android:id="@+id/quote_author"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="- Author"
+        android:text="@string/author"
         android:textSize="14sp"
         android:textStyle="bold"
         android:paddingTop="4dp" />
+
+    <Button
+        android:id="@+id/favorite_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_to_favorites"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp" />
+
 </LinearLayout>

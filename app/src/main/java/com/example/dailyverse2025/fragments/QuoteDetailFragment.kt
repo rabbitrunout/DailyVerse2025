@@ -25,8 +25,8 @@ class QuoteDetailFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            param1 = it.getString(com.example.dailyverse2025.fragments.ARG_PARAM1)
+            param2 = it.getString(com.example.dailyverse2025.fragments.ARG_PARAM2)
         }
     }
 
@@ -52,8 +52,8 @@ class QuoteDetailFragment : Fragment() {
         fun newInstance(param1: String, param2: String) =
             QuoteDetailFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putString(com.example.dailyverse2025.fragments.ARG_PARAM1, param1)
+                    putString(com.example.dailyverse2025.fragments.ARG_PARAM2, param2)
                 }
             }
     }
