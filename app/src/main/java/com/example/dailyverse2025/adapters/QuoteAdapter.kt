@@ -10,7 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.dailyverse2025.R
 import com.example.dailyverse2025.models.Quote
 import com.example.dailyverse2025.utils.FavoritesManager
-class QuoteAdapter(private val quotes: List<Quote>, private val showFavoriteButton: Boolean) :
+class QuoteAdapter(private val quotes: List<Quote>, private val showFavoriteButton: Boolean,
+                   private val onQuoteClick: ((Quote) -> Unit)? = null) :
     RecyclerView.Adapter<QuoteAdapter.QuoteViewHolder>() {
 
     inner class QuoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -29,18 +30,15 @@ class QuoteAdapter(private val quotes: List<Quote>, private val showFavoriteButt
         holder.quoteText.text = "\"${quote.text}\""
         holder.quoteAuthor.text = "- ${quote.author}"
 
+        holder.itemView.setOnClickListener {
+            onQuoteClick?.invoke(quotes[position])
+        }
+
         if (showFavoriteButton) {
             holder.favoriteButton.visibility = View.VISIBLE
             holder.favoriteButton.setOnClickListener {
-                val context = holder.itemView.context
-                val added = FavoritesManager.toggleFavorite(quotes[position], context)
-
-                val message = if (added) {
-                    "Added to favorites!"
-                } else {
-                    "Removed from favorites!"
-                }
-                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                FavoritesManager.addFavorite(quotes[position], holder.itemView.context)
+                Toast.makeText(holder.itemView.context, "Added to favorites!", Toast.LENGTH_SHORT).show()
             }
         } else {
             holder.favoriteButton.visibility = View.GONE

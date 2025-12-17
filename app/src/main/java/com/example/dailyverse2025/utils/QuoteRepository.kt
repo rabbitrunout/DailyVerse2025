@@ -10,6 +10,7 @@ import java.io.InputStreamReader
 import kotlin.random.Random
 import kotlin.text.category
 
+
 object QuoteRepository {
     private var cachedQuotes: List<Quote>? = null
 

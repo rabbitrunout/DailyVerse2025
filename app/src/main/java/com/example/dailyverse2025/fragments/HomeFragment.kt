@@ -30,18 +30,9 @@ class HomeFragment : Fragment() {
         quoteText.text = "\"${quote.text}\"\n\n- ${quote.author}"
 
         favoriteButton.setOnClickListener {
-            //FavoritesManager.addFavorite(quote, requireContext())
-            //Toast.makeText(requireContext(), "Added to favorites!", Toast.LENGTH_SHORT).show()
-            val added = FavoritesManager.toggleFavorite(quote, requireContext())
-
-            val message = if (added) {
-                "Added to favorites!"
-            } else {
-                "Removed from favorites!"
-            }
-            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+            FavoritesManager.addFavorite(quote, requireContext())
+            Toast.makeText(requireContext(), "Added to favorites!", Toast.LENGTH_SHORT).show()
         }
-
 
         return view
     }
